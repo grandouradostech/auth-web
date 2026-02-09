@@ -12,7 +12,7 @@ export const useAuth = () => {
   const router = useRouter()
 
   const saveAuthCookie = (token: string) => {
-    Cookies.set("@Auth-Core:Token", token, {
+    Cookies.set("token", token, {
       expires: 7,
       //domain: ".granddos.tech",
       sameSite: "lax",
@@ -73,12 +73,7 @@ export const useAuth = () => {
         { empresaId: tenantId, appSlug: "core" },
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      console.log(response.data)
 
-      const { access_token: finalToken } = response.data
-      console.log(finalToken)
-
-      saveAuthCookie(finalToken)
       window.sessionStorage.removeItem("@Auth-Core:Access_token")
       window.sessionStorage.removeItem("@Auth-Core:Empresas")
       router.push(`/dashboard`)

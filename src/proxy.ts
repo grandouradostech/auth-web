@@ -2,17 +2,15 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 export default function proxy(request: NextRequest) {
-  // CORREÇÃO: No Middleware, usa-se request.cookies.get()
-  const cookieObj = request.cookies.get("@Auth-Core:Token")
-  const tokenCookie = cookieObj?.value // Aqui pegamos o valor da string
+  const cookieObj = request.cookies.get("token")
+  const tokenCookie = cookieObj?.value
+  console.log(cookieObj)
 
-  console.log(cookieObj?.name)
   const { pathname } = request.nextUrl
 
   const isPublicRoute =
     pathname === "/" || pathname.startsWith("/_next") || pathname.includes(".")
 
-  // Se não houver cookie e não for rota pública, barra
   if (!tokenCookie && !isPublicRoute) {
     return redirectToLogin(request)
   }
