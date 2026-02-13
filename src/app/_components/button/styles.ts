@@ -1,33 +1,38 @@
-"use client";
-import styled, { css } from "styled-components";
-import { ButtonVariant, ButtonFit } from ".";
+"use client"
+import styled, { css } from "styled-components"
+import { ButtonVariant, ButtonFit } from "."
 
 interface ContainerProps {
-  $variant: ButtonVariant;
-  $fit: ButtonFit;
+  $variant: ButtonVariant
+  $fit: ButtonFit
 }
 
 const variants = {
   primary: css`
-    background-color: #202E30;
+    background-color: #202e30;
     color: #fff;
     border: 1px solid transparent;
-    &:hover:not(:disabled) { background-color: #172223; }
+    &:hover:not(:disabled) {
+      background-color: #172223;
+    }
   `,
   outline: css`
     background-color: transparent;
-    color: #202E30;
-    border: 2px solid #202E30;
-    &:hover:not(:disabled) { background-color: rgba(32, 46, 48, 0.05); }
+    color: #202e30;
+    border: 2px solid #202e30;
+    &:hover:not(:disabled) {
+      background-color: #202e300d;
+    }
   `,
   secondary: css`
-    background-color: #E5E7EB;
-    color: #202E30;
+    background-color: #e5e7eb;
+    color: #202e30;
     border: 1px solid transparent;
-    &:hover:not(:disabled) { background-color: #D1D5DB; }
-  `
-};
-
+    &:hover:not(:disabled) {
+      background-color: #d1d5db;
+    }
+  `,
+}
 
 const fits = {
   full: css`
@@ -35,16 +40,16 @@ const fits = {
     padding: 0 40px;
   `,
   content: css`
-    width: auto; 
-    padding: 0 24px; 
+    width: auto;
+    padding: 0 24px;
   `,
   icon: css`
     /* width: 45px !important;  */
     aspect-ratio: 1/1;
-    padding: 0; 
+    padding: 0;
     justify-content: center;
-  `
-};
+  `,
+}
 
 export const Container = styled.button<ContainerProps>`
   display: inline-flex;
@@ -52,21 +57,19 @@ export const Container = styled.button<ContainerProps>`
   justify-content: center;
   gap: 0.5rem;
   white-space: nowrap;
-  
-  
-  height: 45px;
+
+  max-height: 40px;
+  height: 40px;
   border-radius: 4px;
-  
-  font-size: 1.5rem; 
+
+  font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
-  
   ${({ $variant }) => variants[$variant]}
 
-  
   ${({ $fit }) => fits[$fit]}
 
   &:active {
@@ -78,4 +81,4 @@ export const Container = styled.button<ContainerProps>`
     opacity: 0.5;
     transform: none;
   }
-`;
+`

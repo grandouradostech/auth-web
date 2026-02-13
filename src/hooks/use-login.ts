@@ -3,23 +3,21 @@ import { AxiosError } from "axios"
 import Cookies from "js-cookie"
 import { auth_api } from "@/services/http/auth"
 import { User, LoginResponse } from "@/types/auth"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+const REDIRECT_MAP: Record<string, string | any> = {
+  chamados: "/apps/support/tickets",
+  docs: "/apps/documentation",
+  usuarios: "/admin/users",
+  frota: process.env.NEXT_PUBLIC_FROTAS_URL,
+  default: "/dashboard",
+}
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
   const router = useRouter()
-
-  const saveAuthCookie = (token: string) => {
-    Cookies.set("token", token, {
-      expires: 7,
-      //domain: ".granddos.tech",
-      sameSite: "lax",
-      secure: true,
-    })
-    auth_api.defaults.headers.Authorization = `Bearer ${token}`
-  }
 
   const getStoredData = useCallback(() => {
     if (typeof window === "undefined") return { token: null, empresas: [] }
@@ -54,7 +52,9 @@ export const useAuth = () => {
         JSON.stringify(empresas),
       )
 
-      router.push(`?token=${access_token}`)
+      router.push(
+        `?callback=${searchParams.get("callback") || "default"}&token=${access_token}`,
+      )
       return response.data
     } catch (err) {
       handleError(err)
@@ -68,15 +68,29 @@ export const useAuth = () => {
     const { token } = getStoredData()
 
     try {
-      const response = await auth_api.post<LoginResponse>(
+      const resp = await auth_api.post<LoginResponse>(
         "/auth/context",
         { empresaId: tenantId, appSlug: "core" },
         { headers: { Authorization: `Bearer ${token}` } },
       )
 
-      window.sessionStorage.removeItem("@Auth-Core:Access_token")
-      window.sessionStorage.removeItem("@Auth-Core:Empresas")
-      router.push(`/dashboard`)
+      if (resp.status === 200) {
+        console.log(resp)
+        window.sessionStorage.removeItem("@Auth-Core:Access_token")
+        window.sessionStorage.removeItem("@Auth-Core:Empresas")
+        // window.location.assign(
+        //   `${process.env.NEXT_APP_FROTAS_URL || "http://localhost:3000"}?token=${resp.data.access_token}&?callback=${searchParams.get("callback") || "default"}`,
+        // )
+
+        const callbackParam = searchParams.get("callback")
+        const targetRoute =
+          callbackParam && REDIRECT_MAP[callbackParam]
+            ? REDIRECT_MAP[callbackParam]
+            : REDIRECT_MAP["frota"]
+        console.log({ callbackParam, targetRoute })
+
+        window.location.assign(targetRoute)
+      }
     } catch (err) {
       //router.push(`/`)
       handleError(err)
@@ -86,7 +100,7 @@ export const useAuth = () => {
   }
 
   const logout = () => {
-    Cookies.remove("@Auth-Core:Token", {
+    Cookies.remove("token", {
       //domain: ".granddos.tech"
     })
     window.sessionStorage.clear()
