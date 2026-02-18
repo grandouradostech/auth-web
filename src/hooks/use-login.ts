@@ -9,7 +9,7 @@ const REDIRECT_MAP: Record<string, string | any> = {
   docs: "/apps/documentation",
   usuarios: "/admin/users",
   frota: process.env.NEXT_PUBLIC_FROTAS_URL,
-  default: "/dashboard",
+  default: process.env.NEXT_PUBLIC_FROTAS_URL,
 }
 
 export const useAuth = () => {
