@@ -1,95 +1,105 @@
+"use client"
 import styled from "styled-components"
 
 export const TableContainer = styled.div`
   width: 100%;
   overflow-x: auto;
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: transparent;
 `
 
 export const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 14px;
+  font-size: 1.4rem;
 `
 
 export const Thead = styled.thead`
-  background-color: #e5e7eb;
-  color: #333;
+  background-color: ${({ theme }) => theme.colors.surface};
+
   .th-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
     height: 100%;
   }
+
   th {
-    padding: 16px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    /* border-right: 1px solid #aaa; */
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.text};
+    opacity: 0.7;
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
-
-    &:last-child {
-      border-right: none;
-    }
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    transition: color 0.2s;
 
     &:hover {
-      background-color: #d1d5db;
+      opacity: 1;
     }
   }
 `
 
 export const Tbody = styled.tbody`
   tr {
-    border-bottom: 1px solid #eee;
-    background-color: #fff;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    background-color: transparent;
+    transition: background-color 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
     &:hover {
-      background-color: #f9f9f9;
+      background-color: ${({ theme }) => theme.colors.border}40;
     }
   }
 
   td {
-    padding: 12px 16px;
-    color: #555;
+    padding: 16px 24px;
+    color: ${({ theme }) => theme.colors.text};
     vertical-align: middle;
-    border-right: 1px solid #eee;
-
-    &:last-child {
-      border-right: none;
-    }
+    font-weight: 400;
   }
 `
 
 export const StackedText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 
   strong {
-    font-size: 13px;
-    color: #333;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.text};
   }
 
   span {
-    font-size: 12px;
-    color: #666;
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.colors.text};
+    opacity: 0.5;
   }
 `
 
 export const PlateChip = styled.span`
-  background-color: #f0f0f0;
-  border: 1px solid #dcdcdc;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-weight: bold;
-  color: #333;
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.text};
 `
 
 export const SortIndicator = styled.span`
-  margin-left: 8px;
-  display: inline-block;
-  width: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  color: ${({ theme }) => theme.colors.text};
 `

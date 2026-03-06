@@ -1,32 +1,39 @@
-import { SelectHTMLAttributes, useId } from "react";
-import { Container } from "./styles";
+import { SelectHTMLAttributes, useId } from "react"
+import { Container } from "./styles"
+
 interface ExtendedSelect extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string
-  options: { label: string, value: string }[]
+  options: { label: string; value: string }[]
   error?: string
-
+  iconSelectorOnly?: boolean
 }
-export default function Select({ label, error, options = [], ...rest }: ExtendedSelect
 
-) {
-
+export default function Select({
+  label,
+  error,
+  options = [],
+  iconSelectorOnly = false,
+  ...rest
+}: ExtendedSelect) {
   const id = useId()
+
   return (
-    <Container>
-      <label htmlFor={id}>{label}</label>
-      <select id={id} {...rest} >
-        <option key={"selecione"} value={""}> Selecione</option>
+    <Container $iconSelectorOnly={iconSelectorOnly} $hasError={!!error}>
+      {!iconSelectorOnly && <label htmlFor={id}>{label}</label>}
 
-        {
-          options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}> {option.label}</option>
-            )
-          })
-        }
+      <select id={id} {...rest}>
+        <option key="selecione" value="">
+          {iconSelectorOnly ? "App" : "Selecione"}
+        </option>
+
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
-      <span className="error">{error}</span>
 
+      {!iconSelectorOnly && <span className="error">{error}</span>}
     </Container>
-  );
+  )
 }

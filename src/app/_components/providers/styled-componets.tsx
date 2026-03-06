@@ -1,19 +1,20 @@
-'use client'
+"use client"
 
-import { GlobalStyles } from "@/global/styles";
-import StyledComponentsRegistry from "@/services/registry";
+import { ThemeProvider } from "@/context/theme"
+import { GlobalStyles } from "@/global/styles"
+import StyledComponentsRegistry from "@/services/registry"
 
 export default function StyledComponentsProvider({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <StyledComponentsRegistry>
-
-      <GlobalStyles />
-      {children}
+      <ThemeProvider>
+        <GlobalStyles />
+        {children}
+      </ThemeProvider>
     </StyledComponentsRegistry>
-
-  );
+  )
 }

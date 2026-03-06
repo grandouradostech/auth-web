@@ -4,22 +4,9 @@ export const Container = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  background-color: ${(e) => e.theme.colors.background};
   font-size: 62.5%;
-  color: #202e30;
-
-  * {
-    box-sizing: border-box;
-  }
+  color: ${(e) => e.theme.colors.text};
 `
 
 export const FormSide = styled.div`
@@ -29,8 +16,10 @@ export const FormSide = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4rem;
-  background-color: #ffffff;
+  background-color: ${(e) => e.theme.colors.surface};
   position: relative;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
+  z-index: 10;
 
   .content-wrapper {
     width: 100%;
@@ -42,7 +31,7 @@ export const FormSide = styled.div`
 
   .logo-area {
     margin-bottom: 2rem;
-    color: #202e30;
+    color: ${(e) => e.theme.colors.text};
 
     svg {
       width: 4.8rem;
@@ -53,14 +42,15 @@ export const FormSide = styled.div`
   h1 {
     font-size: 2.8rem;
     font-weight: 900;
-    color: #202e30;
+    color: ${(e) => e.theme.colors.text};
     letter-spacing: -0.05rem;
     margin: 0;
   }
 
   p.subtitle {
     font-size: 1.5rem;
-    color: #5f6c7b;
+    color: ${(e) => e.theme.colors.text};
+    opacity: 0.8;
     margin: 0.8rem 0 0 0;
     line-height: 1.5;
   }
@@ -84,7 +74,7 @@ export const FormSide = styled.div`
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      color: #5f6c7b;
+      color: ${(e) => e.theme.colors.text};
       cursor: pointer;
       font-weight: 400;
     }
@@ -92,14 +82,15 @@ export const FormSide = styled.div`
     input[type="checkbox"] {
       width: 1.6rem;
       height: 1.6rem;
-      border-radius: 4px;
-      border: 1px solid #cbd5e1;
-      accent-color: #202e30;
+      border-radius: ${(e) => e.theme.sizes.borderRadius};
+      border: 1px solid ${(e) => e.theme.colors.border};
+      accent-color: ${(e) => e.theme.colors.primary};
+      outline-color: ${(e) => e.theme.colors.outline};
       margin: 0;
     }
 
     a {
-      color: #202e30;
+      color: ${(e) => e.theme.colors.primary};
       text-decoration: none;
       font-weight: 600;
 
@@ -112,11 +103,11 @@ export const FormSide = styled.div`
   .select-tenant {
     width: 100%;
     padding: 1.2rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 4px;
+    border: 1px solid ${(e) => e.theme.colors.border};
+    border-radius: ${(e) => e.theme.sizes.borderRadius};
     font-size: 1.5rem;
-    background-color: #ffffff;
-    color: #202e30;
+    background-color: ${(e) => e.theme.colors.surface};
+    color: ${(e) => e.theme.colors.text};
     cursor: pointer;
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23202E30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -125,15 +116,15 @@ export const FormSide = styled.div`
     background-size: 1.6rem;
 
     &:focus {
-      outline: none;
-      border-color: #202e30;
+      outline: 3px solid ${(e) => e.theme.colors.outline};
+      border-color: ${(e) => e.theme.colors.primary};
     }
   }
 
   .back-button {
     background: transparent;
     border: none;
-    color: #5f6c7b;
+    color: ${(e) => e.theme.colors.text};
     font-size: 1.4rem;
     cursor: pointer;
     margin-top: 1.6rem;
@@ -143,17 +134,17 @@ export const FormSide = styled.div`
     font-weight: 500;
 
     &:hover {
-      color: #202e30;
+      color: ${(e) => e.theme.colors.primary};
     }
   }
 
   .error-message {
-    color: #d93025;
+    color: ${(e) => e.theme.colors.error};
     font-size: 1.3rem;
-    background-color: #fef2f2;
+    background-color: transparent;
     padding: 1rem;
-    border-radius: 4px;
-    border: 1px solid #fecaca;
+    border-radius: ${(e) => e.theme.sizes.borderRadius};
+    border: 1px solid ${(e) => e.theme.colors.errorBorder};
     text-align: center;
   }
 
@@ -165,23 +156,25 @@ export const FormSide = styled.div`
     align-items: center;
     gap: 0.8rem;
     font-size: 1.2rem;
-    color: #94a3b8;
+    color: ${(e) => e.theme.colors.text};
+    opacity: 0.7;
 
     strong {
-      color: #202e30;
+      color: ${(e) => e.theme.colors.text};
       font-weight: 700;
+      opacity: 1;
     }
   }
 `
 
 export const BgSide = styled.div`
   flex: 1;
-  background-color: #202e30;
+  background-color: ${(e) => e.theme.colors.background};
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 8rem;
-  color: white;
+  color: ${(e) => e.theme.colors.text};
   position: relative;
   overflow: hidden;
 
@@ -220,31 +213,31 @@ export const BgSide = styled.div`
     align-items: center;
     gap: 2rem;
     padding: 2rem;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: ${(e) => e.theme.sizes.borderRadius};
+    background: transparent;
+    border: 1px solid ${(e) => e.theme.colors.border};
     cursor: default;
     transition: background 0.2s ease;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: ${(e) => e.theme.colors.outline};
     }
 
     .icon-box {
       width: 4.8rem;
       height: 4.8rem;
-      background: #1a2526;
-      border-radius: 4px;
+      background: ${(e) => e.theme.colors.surface};
+      border-radius: ${(e) => e.theme.sizes.borderRadius};
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid ${(e) => e.theme.colors.border};
       flex-shrink: 0;
 
       svg {
         width: 2.4rem;
         height: 2.4rem;
-        color: #ffffff;
+        color: ${(e) => e.theme.colors.text};
       }
     }
 
@@ -255,13 +248,14 @@ export const BgSide = styled.div`
         font-size: 1.6rem;
         font-weight: 600;
         margin: 0 0 0.4rem 0;
-        color: #ffffff;
+        color: ${(e) => e.theme.colors.text};
         letter-spacing: 0.02rem;
       }
 
       p {
         font-size: 1.4rem;
-        color: #a0aec0;
+        color: ${(e) => e.theme.colors.text};
+        opacity: 0.8;
         margin: 0;
         line-height: 1.4;
       }

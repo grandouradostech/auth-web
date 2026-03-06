@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-
-export default function proxy(request: NextRequest) {
-  const cookieObj = request.cookies.get("token")
-  const tokenCookie = cookieObj?.value
+export function proxy(request: NextRequest) {
+  const cookie_token = request.cookies.get("token")
+  const tokenCookie = cookie_token?.value
+  const cookie_empresa_id = request.cookies.get("empresaId")
+  const tokenEmpresaId = cookie_empresa_id?.value
 
   const { pathname } = request.nextUrl
 
@@ -21,8 +22,10 @@ export default function proxy(request: NextRequest) {
       return response
     }
 
-    if (pathname === "/") {
-      return NextResponse.redirect(new URL("/dashboard", request.url))
+    if (pathname === "/" && tokenEmpresaId) {
+      return NextResponse.redirect(
+        new URL(`/${tokenEmpresaId}/dashboard`, request.url),
+      )
     }
   }
 
@@ -34,6 +37,7 @@ function isJwtExpired(token: string): boolean {
     const base64Url = token.split(".")[1]
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
     const jsonPayload = atob(base64)
+
     const { exp } = JSON.parse(jsonPayload)
 
     if (!exp) return false

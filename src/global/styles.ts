@@ -9,14 +9,14 @@ html {
 }
 html,
 body {
-width: 100%;        
+    width: 100%;        
     max-width: 100%;    
     overflow-x: hidden;
   }
 
 body {
-  color: #202E30;
-  background: #fbfbfc;
+  color: #f5f5f5;
+  background-color: #04121a;
   font-size: 1.6rem;
   font-optical-sizing: auto;
   font-weight: 500;
@@ -31,9 +31,8 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  outline-color: #202E30
-;
-outline-width: 2px;
+  outline-color: #f5f5f5cc;
+  outline-width: 2px;
 }
 
 a {
@@ -46,30 +45,30 @@ a {
   }
 
   ::-webkit-scrollbar-track {
-    background: #fff;
+    background: #f5f5f5;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color: #051923;
     border-radius: 10px;
-    border: 2px solid #fff;
+    border: 2px solid #f5f5f5;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #000;
+    background-color: #051923;
   }
 input{
   outline: none;
 }
 .input-component:has(input:focus),.Select-component:has(:focus) {
   outline: auto;
-  outline-color: #202E30
+  outline-color: #051923
  !important;
   outline-width: 2px;
   
  }
  button,input{
-  font-family:var(--font-work-sans), sans-serif;
+  font-family:var(--font-work-sans), sans-serif !important;
 
  }
 
@@ -87,8 +86,6 @@ input{
       flex-direction: column !important;
     }
   }
-
-
 
 `
 export { GlobalStyles }

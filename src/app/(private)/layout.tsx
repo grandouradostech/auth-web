@@ -1,14 +1,9 @@
-import PrivateLayoutProvider from "../_components/private-layout";
+import PrivateLayoutProvider from "../_components/private-layout"
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  return (
-    <PrivateLayoutProvider>
-      {children}
-    </PrivateLayoutProvider>
-
-  );
+  return <PrivateLayoutProvider>{children}</PrivateLayoutProvider>
 }

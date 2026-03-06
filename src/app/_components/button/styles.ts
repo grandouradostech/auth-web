@@ -9,27 +9,27 @@ interface ContainerProps {
 
 const variants = {
   primary: css`
-    background-color: #202e30;
-    color: #fff;
+    background-color: ${(e) => e.theme.colors.primary};
+    color: #ffffff;
     border: 1px solid transparent;
     &:hover:not(:disabled) {
-      background-color: #172223;
+      filter: brightness(0.9);
     }
   `,
   outline: css`
     background-color: transparent;
-    color: #202e30;
-    border: 2px solid #202e30;
+    color: ${(e) => e.theme.colors.text};
+    border: 2px solid ${(e) => e.theme.colors.text};
     &:hover:not(:disabled) {
-      background-color: #202e300d;
+      background-color: ${(e) => e.theme.colors.surface};
     }
   `,
   secondary: css`
-    background-color: #e5e7eb;
-    color: #202e30;
-    border: 1px solid transparent;
+    background-color: ${(e) => e.theme.colors.surface};
+    color: ${(e) => e.theme.colors.text};
+    border: 1px solid ${(e) => e.theme.colors.border};
     &:hover:not(:disabled) {
-      background-color: #d1d5db;
+      background-color: ${(e) => e.theme.colors.outline};
     }
   `,
 }
@@ -44,7 +44,6 @@ const fits = {
     padding: 0 24px;
   `,
   icon: css`
-    /* width: 45px !important;  */
     aspect-ratio: 1/1;
     padding: 0;
     justify-content: center;
@@ -60,7 +59,7 @@ export const Container = styled.button<ContainerProps>`
 
   max-height: 40px;
   height: 40px;
-  border-radius: 4px;
+  border-radius: ${(e) => e.theme.sizes.borderRadius};
 
   font-size: 1.5rem;
   font-weight: 600;

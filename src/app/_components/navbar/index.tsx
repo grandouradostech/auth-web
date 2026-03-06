@@ -1,22 +1,153 @@
-'use client';
+"use client"
+import React, { useEffect, useRef, useState } from "react"
+import { Menu, MoreHorizontal, ChevronsUpDown, ArrowLeft } from "lucide-react"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "../breadcrumb"
+import * as S from "./styles"
+import { useParams, usePathname, useRouter } from "next/navigation"
+import { generateBreadcrumbs } from "@/util/breadcup"
+import { useQuery } from "@tanstack/react-query"
+import { geApps } from "@/services/http/apps"
 
-import * as S from './styles';
-import Link from 'next/link';
-import { UserCircle } from 'lucide-react';
+interface NavbarProps {
+  onOpenSidebar: () => void
+  showAppSelector: boolean
+  showBackButton?: boolean
+}
 
-export default function NavBar() {
-  return <S.Container>
+interface IApp {
+  apps: {
+    id: string
+    nome: string
+    slug: string
+    criadoEm: string
+  }[]
+}
 
-    <div className="logo">logo</div>
-    <ul>
-      <li><Link href={"#"}>Biblioteca</Link></li>
-      <li><Link href={"#"}>Documentação</Link></li>
-      <li><Link href={"#"}>Chamandos</Link></li>
-      <li><Link href={"#"}>Gerenciamnto</Link></li>
-      <li className='profile'><Link href={"#"}><UserCircle size={25} /></Link></li>
+export default function Navbar({
+  onOpenSidebar,
+  showAppSelector,
+  showBackButton,
+}: NavbarProps) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const params = useParams()
 
-    </ul>
+  const breadcrumbs = generateBreadcrumbs(pathname)
 
+  const { data, isLoading } = useQuery<IApp>({
+    queryKey: ["apps", params?.app_slug],
+    queryFn: geApps,
+  })
 
-  </S.Container>
+  const tenantId = pathname.split("/")[1]
+
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  function handleSelectApp(appSlug: string) {
+    if (params?.app_slug) {
+      const splitedPathName = pathname.split(String(params.app_slug))
+      const newPathName = splitedPathName.join(appSlug)
+      router.push(newPathName)
+      return
+    }
+    router.push(`/${tenantId}/dashboard/app/${appSlug}/overview`)
+    setOpen(false)
+  }
+  function handleRouteBack() {
+    router.push(`/${tenantId}/dashboard/`)
+  }
+
+  return (
+    <S.Container>
+      <S.LeftSection>
+        {showBackButton && (
+          <S.ArrowLeftButton onClick={handleRouteBack}>
+            <ArrowLeft size={20} />
+          </S.ArrowLeftButton>
+        )}
+        <S.MenuButton onClick={onOpenSidebar}>
+          <Menu size={20} />
+        </S.MenuButton>
+
+        {showAppSelector && (
+          <S.ProjectSelectorArea
+            ref={ref}
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            <S.ProjectLabel>
+              {!isLoading && params?.app_slug && pathname.includes("/app/")
+                ? (data?.apps?.find((a) => a.slug === params?.app_slug)?.nome ??
+                  "Todos os App's")
+                : "Carregando ..."}
+            </S.ProjectLabel>
+
+            <ChevronsUpDown
+              size={14}
+              className="selector-icon"
+              style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+            />
+
+            {open && (
+              <S.AppDropdown>
+                {data?.apps?.map((app) => (
+                  <S.AppItem
+                    key={app.id}
+                    $active={app.id === params?.app_slug}
+                    onClick={() => handleSelectApp(app.slug)}
+                  >
+                    {app.nome}
+                  </S.AppItem>
+                ))}
+              </S.AppDropdown>
+            )}
+
+            <S.VerticalSeparator />
+          </S.ProjectSelectorArea>
+        )}
+
+        <S.BreadcrumbArea>
+          <Breadcrumb>
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={crumb.href}>
+                {index > 0 && <BreadcrumbSeparator />}
+                <BreadcrumbItem>
+                  {crumb.isLast ? (
+                    <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink href={crumb.href}>
+                      {crumb.label}
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+              </React.Fragment>
+            ))}
+          </Breadcrumb>
+        </S.BreadcrumbArea>
+      </S.LeftSection>
+
+      <S.RightSection>
+        <S.ActionIconsArea>
+          <MoreHorizontal size={20} className="icon-action" />
+        </S.ActionIconsArea>
+      </S.RightSection>
+    </S.Container>
+  )
 }

@@ -1,17 +1,13 @@
-'use client'
+"use client"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
+export const queryClient = new QueryClient()
 export default function ProviderQueryClient({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const client = new QueryClient()
   return (
-    <QueryClientProvider client={client}>
-
-      {children}
-    </QueryClientProvider>
-
-  );
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
 }

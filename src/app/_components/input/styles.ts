@@ -1,4 +1,4 @@
-// styles.ts
+"use client"
 import styled from "styled-components"
 
 export const Container = styled.div`
@@ -6,10 +6,11 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 6px;
   width: 100%;
+
   label {
     font-weight: 600;
     font-size: 1.4rem;
-    color: #202e30;
+    color: ${(e) => e.theme.colors.text};
     letter-spacing: 0.3px;
   }
 
@@ -19,20 +20,22 @@ export const Container = styled.div`
     align-items: center;
     width: 100%;
     height: 40px;
-    border-radius: 4px;
-    border: 1.5px solid #202e30;
-    background-color: #fff;
+    overflow: hidden;
+    border-radius: ${(e) => e.theme.sizes.borderRadius};
+    border: 1.5px solid ${(e) => e.theme.colors.border};
+    background-color: ${(e) => e.theme.colors.surface};
     transition: all 0.2s ease-in-out;
     padding: 1px;
-    &:focus {
-      border-color: #202e30;
-      box-shadow: 0 0 0 3px rgba(32, 46, 48, 0.1);
+
+    &:focus-within {
+      border-color: ${(e) => e.theme.colors.primary};
+      box-shadow: 0 0 0 3px ${(e) => e.theme.colors.outline};
     }
 
     &.has-error {
-      border-color: #ff3737;
-      &:focus {
-        box-shadow: 0 0 0 3px rgba(255, 55, 55, 0.1);
+      border-color: ${(e) => e.theme.colors.error};
+      &:focus-within {
+        box-shadow: 0 0 0 3px ${(e) => e.theme.colors.errorBorder};
       }
     }
   }
@@ -44,9 +47,11 @@ export const Container = styled.div`
     outline: none;
     border: none;
     background: none;
+    color: ${(e) => e.theme.colors.text};
 
     &::placeholder {
-      color: #a0aec0;
+      color: ${(e) => e.theme.colors.text};
+      opacity: 0.5;
     }
   }
 
@@ -54,15 +59,14 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     gap: 4px;
-    color: #ff3737;
+    color: ${(e) => e.theme.colors.error};
     font-size: 1.2rem;
     font-weight: 500;
     margin-top: 2px;
-
-    background-color: #fef2f2;
+    background-color: transparent;
     padding: 1rem;
-    border-radius: 4px;
-    border: 1px solid #fecaca;
+    border-radius: ${(e) => e.theme.sizes.borderRadius};
+    border: 1px solid ${(e) => e.theme.colors.errorBorder};
     text-align: center;
   }
 `
