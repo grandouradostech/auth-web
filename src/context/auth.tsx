@@ -108,7 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       )
 
       if (resp.status === 200) {
-        const newToken = resp.data.token || token
+        const newToken = resp.data.token_token
         Cookies.set("token", newToken)
 
         await queryClient.invalidateQueries({ queryKey: ["/usuarios/me"] })
