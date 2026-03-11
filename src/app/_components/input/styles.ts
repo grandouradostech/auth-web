@@ -24,9 +24,19 @@ export const Container = styled.div`
     border-radius: ${(e) => e.theme.sizes.borderRadius};
     border: 1.5px solid ${(e) => e.theme.colors.border};
     background-color: ${(e) => e.theme.colors.surface};
-    transition: all 0.2s ease-in-out;
+    /* transition: all 0.2s ease-in-out; */
     padding: 1px;
 
+    .input-icon {
+      color: ${(e) => e.theme.colors.text};
+      opacity: 0.7;
+
+      aspect-ratio: 1/1;
+      align-items: center;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+    }
     &:focus-within {
       border-color: ${(e) => e.theme.colors.primary};
       box-shadow: 0 0 0 3px ${(e) => e.theme.colors.outline};
@@ -48,11 +58,22 @@ export const Container = styled.div`
     border: none;
     background: none;
     color: ${(e) => e.theme.colors.text};
+    /* padding: 4px; */
 
     &::placeholder {
       color: ${(e) => e.theme.colors.text};
       opacity: 0.5;
     }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: ${(e) => e.theme.colors.text};
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px ${(e) => e.theme.colors.surface};
   }
 
   .error-message {

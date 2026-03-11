@@ -15,8 +15,7 @@ const float = keyframes`
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100%;
-  max-height: calc(100dvh -48px);
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;

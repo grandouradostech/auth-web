@@ -147,6 +147,7 @@ export const MenuItemLink = styled.button<{ $active?: boolean }>`
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
+  cursor: pointer;
   height: 40px;
   border-radius: ${({ theme }) => theme.sizes.borderRadius};
   color: ${({ theme }) => theme.colors.text};
@@ -191,12 +192,18 @@ export const UserProfile = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 `
 
 export const UserAvatar = styled.div`
   width: 24px;
   height: 24px;
   background: #4caf50;
+  font-weight: bold;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
 `
 

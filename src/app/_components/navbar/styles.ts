@@ -11,6 +11,9 @@ export const Container = styled.header`
   padding: 0 16px;
   min-width: 100%;
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 `
 
 export const LeftSection = styled.div`
@@ -73,6 +76,7 @@ export const RightSection = styled.div`
 export const ActionIconsArea = styled.div`
   display: flex;
   align-items: center;
+  gap: 16px;
 
   .icon-action {
     color: ${({ theme }) => theme.colors.text};
@@ -82,6 +86,25 @@ export const ActionIconsArea = styled.div`
     &:hover {
       opacity: 1;
     }
+  }
+`
+
+export const ThemeToggleButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.6;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 1;
+    background-color: ${({ theme }) => theme.colors.border}40;
   }
 `
 

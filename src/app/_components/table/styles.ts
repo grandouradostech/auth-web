@@ -1,10 +1,34 @@
 "use client"
 import styled from "styled-components"
 
+export const EmptyTableContainer = styled.div`
+  width: 100%;
+  overflow-x: auto;
+  min-height: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.surface};
+
+  gap: 8px;
+  border-radius: ${(e) => e.theme.sizes.borderRadius};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: transparent;
+  .title {
+    color: ${({ theme }) => theme.colors.text};
+  }
+  .description {
+    color: ${({ theme }) => theme.colors.text};
+    opacity: 0.5;
+  }
+`
 export const TableContainer = styled.div`
   width: 100%;
   overflow-x: auto;
-  border-radius: 6px;
+  min-height: fit-content;
+  border-radius: ${(e) => e.theme.sizes.borderRadius};
   border: 1px solid ${({ theme }) => theme.colors.border};
   background-color: transparent;
 `
@@ -28,16 +52,19 @@ export const Thead = styled.thead`
 
   th {
     padding: 12px 24px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 500;
     color: ${({ theme }) => theme.colors.text};
-    opacity: 0.7;
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border};
     transition: color 0.2s;
-
+    position: -webkit-sticky;
+    background-color: ${(e) => e.theme.colors.surface};
+    position: sticky;
+    top: 0;
+    z-index: 10;
     &:hover {
       opacity: 1;
     }
@@ -89,7 +116,7 @@ export const PlateChip = styled.span`
   background-color: ${({ theme }) => theme.colors.surface};
   border: 1px solid ${({ theme }) => theme.colors.border};
   padding: 2px 8px;
-  border-radius: 12px;
+  border-radius: 4px;
   font-family: var(--font-mono, monospace);
   font-size: 1.2rem;
   font-weight: 500;

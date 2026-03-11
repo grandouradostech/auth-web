@@ -1,5 +1,3 @@
-"use client"
-
 import { Suspense } from "react"
 import Login from "."
 import Loading from "../_components/loading"

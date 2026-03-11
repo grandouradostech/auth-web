@@ -4,11 +4,6 @@ import {
   Zap,
   Users,
   Shield,
-  AlertCircle,
-  Cpu,
-  Clock,
-  HardDrive,
-  BarChart,
   FileText,
   Ticket,
   Settings,
@@ -42,8 +37,44 @@ export function getLayoutConfig(
   pathname: string,
   params: { empresa_id: string; app_slug?: string },
 ): LayoutConfig {
-  const basePath = `${params.empresa_id}/dashboard/`
+  const basePath = `${params.empresa_id}/dashboard/pessoas`
   const appSelectorProps = { showAppSelector: true }
+
+  const pessoasSegment = pathname.split("/pessoas/")[1]
+  const userId = pessoasSegment ? pessoasSegment.split("/")[0] : null
+
+  if (userId) {
+    return {
+      layoutKey: `menu-usuario-${userId}`,
+      sidebarMenus: [
+        {
+          name: "Informações Gerais",
+          path: `${basePath}/${userId}`,
+          icon: <FileText size={18} />,
+        },
+        {
+          name: "Aplicações",
+          path: `${basePath}/${userId}/apps`,
+          icon: <LayoutGrid size={18} />,
+        },
+        {
+          name: "Permissões",
+          path: `${basePath}/${userId}/permissoes`,
+          icon: <Shield size={18} />,
+        },
+        {
+          name: "Atividades e Histórico",
+          path: `${basePath}/${userId}/historico`,
+          icon: <History size={18} />,
+        },
+      ],
+      navbarProps: {
+        title: "Perfil do Usuário",
+        ...appSelectorProps,
+        showBackButton: true,
+      },
+    }
+  }
 
   if (pathname.includes(basePath + "app/") && params.app_slug) {
     return {
@@ -53,16 +84,6 @@ export function getLayoutConfig(
           name: "Overview",
           path: `${basePath}/app/${params.app_slug}/overview`,
           icon: <LayoutGrid size={18} />,
-        },
-        {
-          name: "Pessoas",
-          path: `${basePath}/app/${params.app_slug}/pessoas`,
-          icon: <Users size={18} />,
-        },
-        {
-          name: "Papeis e permissões",
-          path: `${basePath}/app/${params.app_slug}/roles`,
-          icon: <Shield size={18} />,
         },
         {
           name: "API Keys",
@@ -220,35 +241,40 @@ export function getLayoutConfig(
         icon: <LayoutGrid size={18} />,
       },
       {
-        name: "Loja de Apps",
-        path: `${basePath}/loja/explorar`,
-        icon: <ShoppingBag size={18} />,
+        name: "Pessoas",
+        path: `${basePath}/pessoas`,
+        icon: <Users size={18} />,
       },
-      {
-        name: "Complementos",
-        path: `${basePath}/complementos/disponiveis`,
-        icon: <PlusCircle size={18} />,
-      },
-      {
-        name: "Financeiro",
-        path: `${basePath}/pagamentos/overview`,
-        icon: <CreditCard size={18} />,
-      },
-      {
-        name: "Segurança",
-        path: `${basePath}/usuarios`,
-        icon: <Shield size={18} />,
-      },
-      {
-        name: "Suporte",
-        path: `${basePath}/chamados`,
-        icon: <Ticket size={18} />,
-      },
-      {
-        name: "Definições",
-        path: `${basePath}/perfil`,
-        icon: <Settings size={18} />,
-      },
+      // {
+      //   name: "Loja de Apps",
+      //   path: `${basePath}/loja/explorar`,
+      //   icon: <ShoppingBag size={18} />,
+      // },
+      // {
+      //   name: "Complementos",
+      //   path: `${basePath}/complementos/disponiveis`,
+      //   icon: <PlusCircle size={18} />,
+      // },
+      // {
+      //   name: "Financeiro",
+      //   path: `${basePath}/pagamentos/overview`,
+      //   icon: <CreditCard size={18} />,
+      // },
+      // {
+      //   name: "Segurança",
+      //   path: `${basePath}/usuarios`,
+      //   icon: <Shield size={18} />,
+      // },
+      // {
+      //   name: "Suporte",
+      //   path: `${basePath}/chamados`,
+      //   icon: <Ticket size={18} />,
+      // },
+      // {
+      //   name: "Definições",
+      //   path: `${basePath}/perfil`,
+      //   icon: <Settings size={18} />,
+      // },
     ],
     navbarProps: {
       title: "Consola de Gestão",

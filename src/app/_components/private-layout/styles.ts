@@ -9,25 +9,36 @@ export const Container = styled.div`
 
   main {
     width: 100dvw;
-    min-height: calc(100dvh - 90px);
+    height: calc(100dvh);
     display: flex;
     flex-direction: column;
     flex: 1;
-    background: #0051;
+    overflow: auto;
 
     .main {
       display: flex;
       min-width: 100%;
       flex: 1;
-      background-color: ${(e) => e.theme.colors.surface};
+      min-height: 100%;
+
+      /* background-color: ${(e) => e.theme.colors.surface}; */
       /* overflow-y: auto; */
       padding: ${(e) => e.theme.sizes.padding};
       justify-content: center;
 
       .content {
-        max-width: 1720px;
+        max-width: 1400px;
         width: 100%;
-        /* padding: 0 20px; */
+        min-height: 100%;
+        padding: 0 20px;
+      }
+    }
+  }
+  @media (max-width: 700px) {
+    .main {
+      padding: ${(e) => e.theme.sizes.padding} 0 0 0 !important;
+      .content {
+        padding: 0 ${(e) => e.theme.sizes.padding} !important;
       }
     }
   }

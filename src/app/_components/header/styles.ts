@@ -13,12 +13,12 @@ export const Container = styled.div`
   h1 {
     color: ${(e) => e.theme.colors.text};
     font-weight: bolder;
-    font-size: 3.8rem;
+    font-size: 3%.2;
   }
   p {
     color: ${(e) => e.theme.colors.text};
-    font-weight: bolder;
-    font-size: 2rem;
+    font-weight: 600;
+    font-size: 1.5rem;
     opacity: 0.7;
   }
 `

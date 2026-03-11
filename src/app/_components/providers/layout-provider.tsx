@@ -1,6 +1,5 @@
 "use client"
 
-import ProviderQueryClient from "./react-query"
 import ProviderReactToastfy from "./react-toastfy"
 import StyledComponentsProvider from "./styled-componets"
 

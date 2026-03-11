@@ -1,8 +1,6 @@
-"use client"
-
 import Link from "next/link"
 import { FileQuestion, ArrowLeft, Home } from "lucide-react"
-import * as S from "../../not-found-styles"
+import * as S from "./_not-found-styles"
 import Button from "@/app/_components/button"
 
 export default function NotFound() {
@@ -28,14 +26,12 @@ export default function NotFound() {
             </Button>
           </Link>
 
-          <button
-            type="button"
-            className="back-link"
-            onClick={() => window.history.back()}
-          >
-            <ArrowLeft size={18} />
-            Retornar à página anterior
-          </button>
+          <Link href="/">
+            <button type="button" className="back-link">
+              <ArrowLeft size={18} />
+              Voltar
+            </button>
+          </Link>
         </S.Actions>
       </S.Content>
 

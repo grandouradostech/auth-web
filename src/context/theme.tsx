@@ -1,13 +1,7 @@
 "use client"
 
 import { darkTheme, lightTheme } from "@/config/theme"
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react"
+import { createContext, useState, useEffect, ReactNode } from "react"
 import { ThemeProvider as StyledThemeProvider } from "styled-components"
 
 interface ThemeContextData {
@@ -20,15 +14,27 @@ export const ThemeContext = createContext<ThemeContextData>(
 )
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [isDark, setIsDark] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const [isDark, setIsDark] = useState(true)
 
   useEffect(() => {
-    setMounted(true)
     const savedTheme = window.localStorage.getItem("@GDHub:theme")
-    if (savedTheme === "light") {
-      setIsDark(false)
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
+    if (savedTheme) {
+      setIsDark(savedTheme === "dark")
+    } else {
+      setIsDark(mediaQuery.matches)
     }
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!window.localStorage.getItem("@GDHub:theme")) {
+        setIsDark(e.matches)
+      }
+    }
+
+    mediaQuery.addEventListener("change", handleChange)
+
+    return () => mediaQuery.removeEventListener("change", handleChange)
   }, [])
 
   const toggleTheme = () => {
@@ -40,8 +46,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }
 
   const theme = isDark ? darkTheme : lightTheme
-
-  if (!mounted) return null
 
   return (
     <ThemeContext.Provider value={{ toggleTheme, isDark }}>

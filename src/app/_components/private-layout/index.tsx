@@ -7,6 +7,7 @@ import Sidebar from "../sidebar"
 import { Container } from "./styles"
 import { getLayoutConfig } from "@/config/route-map"
 import Loading from "../loading"
+import { ForbiddenProvider } from "../providers/forbidden-provider"
 
 export default function PrivateLayoutProvider({
   children,
@@ -24,6 +25,7 @@ export default function PrivateLayoutProvider({
     empresa_id,
     app_slug,
   })
+
   return (
     <Container>
       <Sidebar
@@ -36,7 +38,9 @@ export default function PrivateLayoutProvider({
         <Navbar onOpenSidebar={() => setIsSidebarOpen(true)} {...navbarProps} />
         <div className="main">
           <Suspense fallback={<Loading />}>
-            <div className="content">{children}</div>
+            <ForbiddenProvider>
+              <div className="content">{children}</div>
+            </ForbiddenProvider>
           </Suspense>
         </div>
       </main>

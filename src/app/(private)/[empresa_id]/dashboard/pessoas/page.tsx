@@ -5,21 +5,21 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query"
-import { getAppBySlug } from "@/services/http/apps"
 import Loading from "@/app/_components/loading"
+import { getUsers } from "@/services/http/users"
 
-const queryClient = new QueryClient()
-export default async function ({ params }: { params: { app_slug: string } }) {
-  const { app_slug } = await params
+export default async function () {
+  const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
-    queryKey: ["app", app_slug],
-    queryFn: () => getAppBySlug(app_slug),
+    queryKey: ["app", "usuarios", 1, 10, ""],
+    queryFn: () => getUsers(1, 10, ""),
   })
+
   return (
     <Suspense fallback={<Loading />}>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <AppOverview app_slug={app_slug} />
+        <AppOverview />
       </HydrationBoundary>
     </Suspense>
   )

@@ -1,6 +1,14 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react"
-import { Menu, MoreHorizontal, ChevronsUpDown, ArrowLeft } from "lucide-react"
+import {
+  Menu,
+  MoreHorizontal,
+  ChevronsUpDown,
+  ArrowLeft,
+  Sun,
+  Moon,
+  LucideLogOut,
+} from "lucide-react"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,6 +21,8 @@ import { useParams, usePathname, useRouter } from "next/navigation"
 import { generateBreadcrumbs } from "@/util/breadcup"
 import { useQuery } from "@tanstack/react-query"
 import { geApps } from "@/services/http/apps"
+import { useThemeToggle } from "@/hooks/use-theme"
+import { useAuth } from "@/hooks/use-login"
 
 interface NavbarProps {
   onOpenSidebar: () => void
@@ -37,6 +47,8 @@ export default function Navbar({
   const pathname = usePathname()
   const router = useRouter()
   const params = useParams()
+  const { isDark, toggleTheme } = useThemeToggle()
+  const { logout } = useAuth()
 
   const breadcrumbs = generateBreadcrumbs(pathname)
 
@@ -72,7 +84,7 @@ export default function Navbar({
     setOpen(false)
   }
   function handleRouteBack() {
-    router.push(`/${tenantId}/dashboard/`)
+    router.push(`/${tenantId}/dashboard/pessoas`)
   }
 
   return (
@@ -87,15 +99,17 @@ export default function Navbar({
           <Menu size={20} />
         </S.MenuButton>
 
-        {showAppSelector && (
+        {false && showAppSelector && (
           <S.ProjectSelectorArea
             ref={ref}
             onClick={() => setOpen((prev) => !prev)}
           >
             <S.ProjectLabel>
-              {!isLoading && params?.app_slug && pathname.includes("/app/")
-                ? (data?.apps?.find((a) => a.slug === params?.app_slug)?.nome ??
-                  "Todos os App's")
+              {!isLoading
+                ? pathname.includes("/dashboard/app/")
+                  ? (data?.apps?.find((a) => a.slug === params?.app_slug)
+                      ?.nome ?? "Não encontrado")
+                  : "Todos os App's"
                 : "Carregando ..."}
             </S.ProjectLabel>
 
@@ -145,7 +159,10 @@ export default function Navbar({
 
       <S.RightSection>
         <S.ActionIconsArea>
-          <MoreHorizontal size={20} className="icon-action" />
+          <S.ThemeToggleButton onClick={toggleTheme}>
+            {isDark ? <Moon size={18} /> : <Sun size={18} />}
+          </S.ThemeToggleButton>
+          <LucideLogOut onClick={() => logout()} size={18} />
         </S.ActionIconsArea>
       </S.RightSection>
     </S.Container>

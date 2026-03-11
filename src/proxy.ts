@@ -4,7 +4,7 @@ export function proxy(request: NextRequest) {
   const cookie_token = request.cookies.get("token")
   const tokenCookie = cookie_token?.value
   const cookie_empresa_id = request.cookies.get("empresaId")
-  const tokenEmpresaId = cookie_empresa_id?.value
+  const EmpresaId = cookie_empresa_id?.value
 
   const { pathname } = request.nextUrl
 
@@ -22,9 +22,9 @@ export function proxy(request: NextRequest) {
       return response
     }
 
-    if (pathname === "/" && tokenEmpresaId) {
+    if (pathname === "/" && EmpresaId) {
       return NextResponse.redirect(
-        new URL(`/${tokenEmpresaId}/dashboard`, request.url),
+        new URL(`/${EmpresaId}/dashboard`, request.url),
       )
     }
   }

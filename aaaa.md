@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { FileQuestion, ArrowLeft, Home } from "lucide-react"
-import * as S from "./not-found-styles"
+import * as S from "../../_not-found-styles"
 import Button from "@/app/_components/button"
 
 export default function NotFound() {

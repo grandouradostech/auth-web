@@ -50,11 +50,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!token || !pathName.includes("/dashboard")) return null
 
       const response = await auth_api.get("/usuarios/me")
-      console.log(response.data)
 
       return response.data.usuario
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 40,
     retry: false,
   })
 
@@ -108,16 +107,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       )
 
       if (resp.status === 200) {
-        const newToken = resp.data.token_token
+        const newToken = resp.data.access_token
         Cookies.set("token", newToken)
 
         await queryClient.invalidateQueries({ queryKey: ["/usuarios/me"] })
 
         const callbackParam = searchParams.get("callback")
         if (!callbackParam || callbackParam === "default")
-          return window.location.assign(`${tenantId}/dashboard/`)
+          return window.location.assign(`${tenantId}/dashboard/pessoas`)
         const targetRoute = (callbackParam &&
-          REDIRECT_MAP[callbackParam])`${tenantId}/dashboard/`
+          REDIRECT_MAP[callbackParam])`${tenantId}/dashboard/pessoas`
 
         window.location.assign(targetRoute)
       }
