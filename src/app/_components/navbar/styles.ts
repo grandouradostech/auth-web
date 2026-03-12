@@ -77,6 +77,7 @@ export const ActionIconsArea = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  color: ${({ theme }) => theme.colors.text};
 
   .icon-action {
     color: ${({ theme }) => theme.colors.text};

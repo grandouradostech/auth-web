@@ -33,20 +33,24 @@ export function AppError({ reset }: AppErrorProps) {
 
         <S.Actions>
           <Button
+            icon={<RotateCcw size={18} />}
             onClick={() => (reset ? reset() : window.location.reload())}
             variant="primary"
-            fit="content"
+            fit="full"
           >
-            <RotateCcw size={18} />
             Tentar novamente
           </Button>
 
-          <Button onClick={() => router.back()} variant="outline" fit="content">
-            <ArrowLeft size={18} />
+          <Button
+            icon={<ArrowLeft size={18} />}
+            onClick={() => router.back()}
+            variant="outline"
+            fit="full"
+          >
             Voltar
           </Button>
 
-          <S.SupportLink href="/chamados">Relatar problema</S.SupportLink>
+          {/* <S.SupportLink href="/chamados">Relatar problema</S.SupportLink> */}
         </S.Actions>
       </S.Content>
 

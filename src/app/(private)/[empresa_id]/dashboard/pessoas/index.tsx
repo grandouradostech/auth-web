@@ -4,7 +4,6 @@ import * as S from "./styles"
 import { useQuery, keepPreviousData } from "@tanstack/react-query"
 import { UserListTable } from "./useListTable"
 import { getUsers } from "@/services/http/users"
-import { AppError } from "@/app/_components/not-found/error/app"
 import Input from "@/app/_components/input"
 import { ArrowRight, UserPlus, UserSearch } from "lucide-react"
 import { AlertLineBox } from "@/app/_components/alert-line-box"
@@ -12,6 +11,7 @@ import { Pagination } from "@/app/_components/pagination"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { useState, useEffect, useCallback, Suspense } from "react"
 import Loading from "@/app/_components/loading"
+import { AppError } from "@/app/_components/errors/module-not-found"
 
 export default function AppOverview() {
   const searchParams = useSearchParams()

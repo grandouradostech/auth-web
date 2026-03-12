@@ -7,7 +7,6 @@ import HeaderText from "@/app/_components/header"
 import Button from "@/app/_components/button"
 import Input from "@/app/_components/input"
 import Loading from "@/app/_components/loading"
-import AppNotFound from "@/app/_components/not-found/app"
 import { AlertLineBox } from "@/app/_components/alert-line-box"
 
 import * as S from "./styles"
@@ -24,6 +23,7 @@ import {
 import Select from "@/app/_components/select"
 import { queryClient } from "@/app/_components/providers/react-query"
 import { useAuth } from "@/hooks/use-login"
+import AppNotFound from "@/app/_components/errors/app-not-found"
 
 export default function UserPermissionsSaaS({
   params,

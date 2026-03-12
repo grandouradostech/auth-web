@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import AppOverview from "."
+import UserOverview from "."
 import {
   dehydrate,
   HydrationBoundary,
@@ -19,7 +19,7 @@ export default async function () {
   return (
     <Suspense fallback={<Loading />}>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <AppOverview />
+        <UserOverview />
       </HydrationBoundary>
     </Suspense>
   )

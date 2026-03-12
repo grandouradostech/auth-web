@@ -4,8 +4,8 @@ import * as S from "./styles"
 import { useQuery } from "@tanstack/react-query"
 import { getAppBySlug } from "@/services/http/apps"
 import { IApp } from "@/types/app"
-import AppNotFound from "@/app/_components/not-found/app"
 import Loading from "@/app/_components/loading"
+import AppNotFound from "@/app/_components/errors/app-not-found"
 
 type IDataType =
   | {

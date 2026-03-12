@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
 import HeaderText from "@/app/_components/header"
 import * as S from "./styles"
-import AppNotFound from "@/app/_components/not-found/app"
 import Loading from "@/app/_components/loading"
 import { getUserbyId } from "@/services/http/users"
 import Section from "@/app/_components/sections"
@@ -13,6 +12,7 @@ import Button from "@/app/_components/button"
 import Input from "@/app/_components/input"
 import { Save, UserX } from "lucide-react"
 import { AlertLineBox } from "@/app/_components/alert-line-box"
+import AppNotFound from "@/app/_components/errors/app-not-found"
 
 const updateSchema = z.object({
   nome: z.string().min(3, "Nome obrigatório"),
@@ -38,7 +38,7 @@ const updateSchema = z.object({
 
 type UpdateFormData = z.infer<typeof updateSchema>
 
-export default function AppOverview({ user_id }: { user_id: string }) {
+export default function UserOverview({ user_id }: { user_id: string }) {
   const { data, isLoading, isError } = useQuery<any>({
     queryKey: ["app", user_id],
     queryFn: () => getUserbyId(user_id),

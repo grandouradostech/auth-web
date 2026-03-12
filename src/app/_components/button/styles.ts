@@ -46,9 +46,8 @@ const variants = {
 
 const fits = {
   full: css`
-    width: 100%;
-    min-width: 130px;
-
+    min-width: 100% !important;
+    max-width: 90% !important;
     padding: 0 40px;
   `,
   content: css`
@@ -82,7 +81,7 @@ export const Container = styled.button<ContainerProps>`
   }
   .icon {
     height: 50%;
-    min-width: 40px;
+    min-width: 40px !important;
     aspect-ratio: 1/1;
 
     border-right: 1px solid ${(e) => e.theme.colors.text};
@@ -112,8 +111,10 @@ export const Container = styled.button<ContainerProps>`
     padding: 0 !important;
     min-width: fit-content;
     max-width: fit-content;
+
     p {
-      ${({ $fit }) => fits[$fit]}
+      width: 100%;
+      padding: 0 10px;
     }
   }
 `

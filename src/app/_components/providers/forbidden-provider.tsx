@@ -1,65 +1,34 @@
 "use client"
-import { createContext, useEffect, useState } from "react"
-import {
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalActions,
-} from "@/app/_components/button/styles"
-import Button from "@/app/_components/button"
-import { ShieldAlert } from "lucide-react"
 
-export const ForbiddenContext = createContext({})
+import React, { useEffect, useState } from "react"
+import { ForbiddenModal } from "../errors/forbidden-modal"
 
-export function ForbiddenProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false)
+interface ForbiddenProviderProps {
+  children: React.ReactNode
+}
+
+export function ForbiddenProvider({ children }: ForbiddenProviderProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    const handleOpen = () => {
-      setIsOpen(true)
+    const handleForbiddenError = () => {
+      setIsModalOpen(true)
     }
 
-    window.addEventListener("OPEN_FORBIDDEN_MODAL", handleOpen)
-    return () => window.removeEventListener("OPEN_FORBIDDEN_MODAL", handleOpen)
+    window.addEventListener("APP_FORBIDDEN_ERROR", handleForbiddenError)
+
+    return () => {
+      window.removeEventListener("APP_FORBIDDEN_ERROR", handleForbiddenError)
+    }
   }, [])
 
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-
   return (
-    <ForbiddenContext.Provider value={{}}>
+    <>
       {children}
-
-      {isOpen && (
-        <ModalOverlay onClick={handleClose}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <ModalHeader>
-              <ShieldAlert size={24} color="#ef4444" />
-              <h3>Acesso Negado</h3>
-            </ModalHeader>
-
-            <ModalBody>
-              <p>
-                Você não tem permissão para realizar esta ação ou acessar este
-                recurso.
-              </p>
-            </ModalBody>
-
-            <ModalActions>
-              <Button
-                variant="primary"
-                fit="content"
-                type="button"
-                onClick={handleClose}
-              >
-                Entendi
-              </Button>
-            </ModalActions>
-          </ModalContent>
-        </ModalOverlay>
-      )}
-    </ForbiddenContext.Provider>
+      <ForbiddenModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   )
 }

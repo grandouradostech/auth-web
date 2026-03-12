@@ -12,7 +12,7 @@ import { Info, UserKeyIcon } from "lucide-react"
 import { AlertLineBox } from "@/app/_components/alert-line-box"
 import { fetchCepV2 } from "@/services/http/third-party/brasil-api"
 import { createUser } from "@/services/http/users"
-import { useParams } from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 
 const isValidCPF = (cpf: string) => {
   const cleanCPF = cpf.replace(/[^\d]+/g, "")
@@ -90,7 +90,8 @@ export default function Registro() {
   const { empresa_id } = useParams<{ empresa_id: string }>()
   const [isPasswordTouched, setIsPasswordTouched] = useState(false)
   const [defaultPassword, setDefaultPassword] = useState("")
-
+  const navigation = useRouter()
+  const pathname = usePathname()
   const {
     register,
     handleSubmit,
@@ -107,8 +108,12 @@ export default function Registro() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => createUser(empresa_id, data),
-    onSuccess: () => {
-      alert("Usuário criado com sucesso!")
+    onSuccess: ({ data }) => {
+      if (data?.usuario?.id) {
+        return navigation.push(
+          `/${empresa_id}/dashboard/pessoas/${data?.usuario?.id}`,
+        )
+      }
     },
     onError: () => {
       alert("Erro ao criar usuário.")

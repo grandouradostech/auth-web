@@ -36,7 +36,7 @@ export const SaaSLoader = styled.svg`
 `
 
 export const LoaderCircle = styled.circle`
-  stroke: ${({ theme }) => theme.colors.primary};
+  stroke: #cd533b;
   stroke-linecap: round;
   animation: ${dash} 1.5s ease-in-out infinite;
 `

@@ -96,10 +96,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { token } = getStoredData()
       const resp = await axios.post(
         process.env.NEXT_PUBLIC_AUTH_API_URL + "/auth/context",
+        { empresaId: tenantId },
         {
-          empresaId: tenantId,
-        },
-        {
+          withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -107,8 +106,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       )
 
       if (resp.status === 200) {
-        const newToken = resp.data.access_token
-        Cookies.set("token", newToken)
+        // const newToken = resp.data.access_token
+        // Cookies.set("token", newToken)
 
         await queryClient.invalidateQueries({ queryKey: ["/usuarios/me"] })
 

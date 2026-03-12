@@ -12,10 +12,9 @@ auth_api.interceptors.response.use(
     const originalRequest = error.config
 
     if (error.response?.status === 403) {
-      if (
-        error.response?.data?.code === "SUDO_REQUIRED" &&
-        !originalRequest._retry
-      ) {
+      const errorCode = error.response?.data?.code
+
+      if (errorCode === "SUDO_REQUIRED" && !originalRequest._retry) {
         originalRequest._retry = true
 
         return new Promise((resolve, reject) => {
@@ -31,13 +30,8 @@ auth_api.interceptors.response.use(
         })
       }
 
-      if (
-        error.response?.data?.code === "FORBIDDEN" ||
-        error.response?.data?.message === "FORBIDDEN"
-      ) {
-        if (typeof window !== "undefined") {
-          window.dispatchEvent(new Event("APP_FORBIDDEN_ERROR"))
-        }
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("APP_FORBIDDEN_ERROR"))
       }
     }
 
